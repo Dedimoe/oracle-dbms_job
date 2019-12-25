@@ -2,6 +2,79 @@
 oracle-dbms_job
 
 ```
+
+--1-- submit job
+
+SQL> VARIABLE jobno number;
+BEGIN
+   DBMS_JOB.SUBMIT(:jobno,
+      'insert into dedi_waktu(tgl,isi)values(sysdate,''test'');' ,
+      SYSDATE,
+      'SYSDATE + 1/24'); --tiap jam
+   COMMIT;
+END;
+SQL>   
+/
+
+PL/SQL procedure successfully completed.
+
+SQL>
+SQL> print jobno
+
+     JOBNO
+----------
+         6
+
+SQL>
+SQL> VARIABLE jobno number;
+BEGIN
+   DBMS_JOB.SUBMIT(:jobno,
+      'insert into dedi_waktu2(tgl,isi)values(sysdate,''test2'');' ,
+      SYSDATE,
+      'SYSDATE + 1/24/2/2');  --tiap 15 menit
+   COMMIT;
+END;
+SQL>  
+/
+
+PL/SQL procedure successfully completed.
+
+SQL>
+SQL>
+SQL> print jobno
+
+     JOBNO
+----------
+         7
+
+SQL> 
+
+SQL> VARIABLE jobno number;
+BEGIN
+   DBMS_JOB.SUBMIT(:jobno,
+      'insert into dedi_waktu2(tgl,isi)values(sysdate,''test3'');' ,
+      SYSDATE,
+      'SYSDATE + 1/24/2/2'); --tiap 15 menit
+   COMMIT;
+END;
+SQL>   
+/
+
+PL/SQL procedure successfully completed.
+
+SQL>
+SQL>
+SQL> print jobno
+
+     JOBNO
+----------
+         8
+
+SQL> -- continue until 11 jobs
+
+
+--2-- remove job
+
 SQL> conn <schema>
 Enter password:
 Connected.
